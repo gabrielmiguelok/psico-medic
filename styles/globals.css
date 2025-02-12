@@ -1,0 +1,87 @@
+/* ---------------------------------------------------------
+   VARIABLES GLOBALES
+   --------------------------------------------------------- */
+:root {
+  /* Paleta calmante con turquesa y naranja suave */
+  --color-primary: #009688;       /* Teal principal */
+  --color-secondary: #FFB74D;     /* Naranja pastel */
+  --color-info-main: #009688;     /* Para íconos informativos */
+  --color-success-main: #FFB74D;  /* Para íconos de éxito */
+  --color-primary-light: #80CBC4;
+  --color-primary-dark: #004D40;
+  --color-bg-light: #E0F2F1;      /* Fondo claro */
+  --color-bg-default: #ffffff;
+  --color-bg-dark: #f5f5f5;
+  --color-text-primary: #333333;
+  --color-text-secondary: #555555;
+
+  --font-family-base: 'Work Sans', sans-serif;
+  --font-size-base: 16px;
+
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 4rem;
+
+  --transition-fast: 0.2s ease-in-out;
+  --transition-base: 0.3s ease;
+}
+
+/* ---------------------------------------------------------
+   RESET BÁSICO
+   --------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  background-color: var(--color-bg-light);
+  color: var(--color-text-primary);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------
+   ENLACES
+   --------------------------------------------------------- */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--color-secondary);
+}
+
+/* ---------------------------------------------------------
+   TITULARES
+   --------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+/* ---------------------------------------------------------
+   BOTONES
+   --------------------------------------------------------- */
+button {
+  font-family: var(--font-family-base);
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------
+   CLASES UTILES
+   --------------------------------------------------------- */
+.text-center {
+  text-align: center;
+}
+.mb-2 {
+  margin-bottom: var(--spacing-sm);
+}
