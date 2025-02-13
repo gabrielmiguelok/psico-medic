@@ -1,11 +1,17 @@
 'use client';
 
-import React from 'react';
-import { Box, Typography, Button, useMediaQuery, Grid } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  Button,
+  useMediaQuery,
+  Grid
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
-// Íconos actualizados
+// Íconos
 import PetsIcon from '@mui/icons-material/Pets';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
@@ -71,22 +77,53 @@ const translations = {
   },
 };
 
+/**
+ * Componente para mostrar el video con fallback de ícono
+ * si no se encuentra el archivo hero.mp4.
+ */
 function HeroVideo() {
+  const [videoError, setVideoError] = useState(false);
+
+  // Maneja el error de carga del video
+  const handleVideoError = () => {
+    setVideoError(true);
+  };
+
   const theme = useTheme();
   const isVerySmall = useMediaQuery(theme.breakpoints.down('xs'));
+
+  // Si falla la carga del video, mostramos el ícono de mascota.
+  if (videoError) {
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          minHeight: { xs: '300px', sm: '400px' },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#f5f5f5',
+          borderRadius: '16px',
+          boxShadow: '0px 8px 30px rgba(0,0,0,0.1)',
+        }}
+      >
+        <PetsIcon sx={{ fontSize: 100, color: '#ccc' }} />
+      </Box>
+    );
+  }
 
   return (
     <Box
       sx={{
         width: '100%',
-        mt: 6,
-        maxWidth: '800px',
-        margin: '0 auto',
         borderRadius: '16px',
         overflow: 'hidden',
         boxShadow: '0px 8px 30px rgba(0,0,0,0.1)',
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'stretch',
+        height: '100%',
         ...(isVerySmall && {
           maxWidth: '100%',
         }),
@@ -94,14 +131,15 @@ function HeroVideo() {
     >
       <Box
         component="video"
-        src="/pet-therapy.mp4"
+        src="/hero.mp4"
         poster="/pet-therapy-poster.png"
+        onError={handleVideoError}
         controls
         playsInline
         aria-label="Video de introducción a PetPsyCare"
         sx={{
           width: '100%',
-          height: 'auto',
+          height: '100%',
           objectFit: 'cover',
           transition: 'transform 0.3s',
           '&:hover': {
@@ -113,6 +151,9 @@ function HeroVideo() {
   );
 }
 
+/**
+ * Ítem individual para cada característica (tarjeta).
+ */
 function FeatureItem({ icon, title, description }) {
   return (
     <Grid item xs={12} sm={4}>
@@ -142,6 +183,9 @@ function FeatureItem({ icon, title, description }) {
   );
 }
 
+/**
+ * Sección principal (Hero) de PetPsyCare.
+ */
 export default function HeroSection({ language = 'es' }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -197,14 +241,14 @@ export default function HeroSection({ language = 'es' }) {
     },
   };
 
-  // Cambiamos gradiente para que combine con teal y un tono más claro:
+  // Botón primario con gradiente.
   const heroPrimaryButtonStyle = {
     ...sharedButtonStyle,
     background: 'linear-gradient(135deg, #009688 0%, #80CBC4 100%)',
     color: '#ffffff',
   };
 
-  // El botón secundario mantiene su borde teal.
+  // Botón secundario con borde y color principal de la paleta.
   const heroSecondaryButtonStyle = {
     ...sharedButtonStyle,
     backgroundColor: '#ffffff',
@@ -233,7 +277,7 @@ export default function HeroSection({ language = 'es' }) {
         zIndex: 1,
       }}
     >
-      {/* Curva superior (opcional) */}
+      {/* Curva superior (decorativo) */}
       <Box
         sx={{
           position: 'absolute',
@@ -263,9 +307,23 @@ export default function HeroSection({ language = 'es' }) {
           maxWidth: '1200px',
         }}
       >
-        <Grid container spacing={4} alignItems="center">
+        <Grid
+          container
+          spacing={4}
+          alignItems="stretch"
+          sx={{ minHeight: { md: '60vh' } }}
+        >
           {/* Texto */}
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -295,7 +353,13 @@ export default function HeroSection({ language = 'es' }) {
                 {t.subtitle1}
               </Typography>
 
-              <Box sx={{ display: 'flex', gap: 2, flexDirection: isMobile ? 'column' : 'row' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  flexDirection: isMobile ? 'column' : 'row',
+                }}
+              >
                 <Button
                   onClick={handleReservarSesion}
                   aria-label={t.button1}
@@ -351,7 +415,7 @@ export default function HeroSection({ language = 'es' }) {
       </Box>
       {/* ------ FIN CONTENIDO PRINCIPAL ------ */}
 
-      {/* Curva inferior (opcional) */}
+      {/* Curva inferior (decorativo) */}
       <Box
         sx={{
           position: 'absolute',
